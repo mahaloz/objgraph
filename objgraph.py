@@ -5,6 +5,7 @@ from PySide2.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel,
                                QCheckBox, QGridLayout)
 from PySide2.QtCore import QDir, QFile
 
+my_bv = None
 
 from binaryninjaui import (
     UIContext,
@@ -16,6 +17,25 @@ from binaryninjaui import (
 )
 from binaryninja.interaction import show_message_box
 from binaryninja.enums import MessageBoxButtonSet, MessageBoxIcon, VariableSourceType
+from binaryninja.architecture import Architecture
+from binaryninja.callingconvention import CallingConvention
+from binaryninja.function import RegisterValue
+from binaryninja.platform import Platform
+
+
+#
+# work
+#
+
+class FooPlatform(Platform):
+    name = "platform_foo"
+
+
+def fix_platform():
+    addr = 0x7154
+    arch = Architecture['ObjgraphArch']
+    foo_platform = FooPlatform(arch)
+    my_bv.create_user_function(addr, plat=foo_platform)
 
 
 #
@@ -112,6 +132,7 @@ class ObjgraphConfig(QDialog):
     def _on_ok_clicked(self):
         path = self._binutils_edit.text()
         self.close()
+        fix_platform()
 
     def _on_binutils_clicked(self):
         directory = QFileDialog.getExistingDirectory(self, "Select binutils folder", "",
@@ -128,6 +149,8 @@ class ObjgraphConfig(QDialog):
 
 
 def launch_objgraph_configure(context):
+    global my_bv
+    mv_bv = context.binaryView
     if context.binaryView is None:
         show_message_box(
             "No binary is loaded",
