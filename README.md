@@ -43,4 +43,20 @@ dialog found in the `Tools` tab in Binary Ninja. Make sure your arch class name 
 
 Instead of running objdump and readelf on each run, you can instead make an output file
 of the contents into `prog_name.readelf` and `prog_name.objdump`, where `prog_name` is 
-the program you are analyzing.
+the program you are analyzing. 
+```bash
+readelf -s prog_name > prog_name.readelf && \
+objdump -D -M intel prog_name > prog_name.objdump
+```
+
+## Example
+
+As an example, you can see the `LM32` arch from `hitbpro-2021` ctf. Open the `firmware.exe` binary in 
+Binary Ninja. Go to the tools tab, then click `Objgraph: Configure`. Make the binutils folder the
+`./examples/lm32` folder found in this repo. Check `use dumpfile` avoid running the readelf and objdump
+binaries, since I ran them and left the output in the same dir.
+
+![](./assets/objgraph_demo.png)
+
+
+
