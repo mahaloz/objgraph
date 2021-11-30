@@ -35,7 +35,7 @@ def get_instruction_info(self, data, addr):
 ```
 
 Feel free to not redfine the stack pointer, registers, or anything else. After completing
-you implementation, just place it in the `archs` folder and select it in the config box
+your implementation, just place it in the `archs` folder and select it in the config box
 dialog found in the `Tools` tab in Binary Ninja. Make sure your arch class name ends in 
 `Arch`.
 
