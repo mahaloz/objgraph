@@ -10,11 +10,11 @@ cp -r  ../objgraph  "/Users/mahaloz/Library/Application\ Support/Binary\ Ninja/p
 It will look a little different on Linux.
 
 ## Usage
-The power of this plugin comes in its ability turn objdump and readelf output into something
-indexable and easily regexable. When quickly adding an arch the easiest and fastest way is
-to copy `generic_arch` found in the `archs` folder. Copy the file, change the `name` in the class
-and define the regex needed for a branching instruction. All that is needed for any arch to work
-is that you define how branching can be regexed:
+The power of this plugin comes from its quickness to create a working CFG from objdump output. You could always 
+write an entire lifting plugin for an arch in binja, or instead you could use this plugin which does nothing but
+make a CFG. When quickly adding an arch the easiest and fastest way is to copy `generic_arch` found in the `archs` 
+folder. Copy the file, change the `name` in the class and define the regex needed for a branching instruction. 
+All that is needed for any arch to work is that you define how branching can be regexed:
 
 ```python
 def get_instruction_info(self, data, addr):
@@ -57,6 +57,11 @@ Binary Ninja. Go to the tools tab, then click `Objgraph: Configure`. Make the bi
 binaries, since I ran them and left the output in the same dir.
 
 ![](./assets/objgraph_demo.png)
+
+## Future Work
+
+This plugin can actually be simplified a little more. It could actually be updated to take just a `config.json` file
+to allow you to more easily define regexs without writing python code. I leave this to future work. Yeet.
 
 
 
